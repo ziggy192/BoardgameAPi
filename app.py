@@ -102,6 +102,10 @@ class BoardgameRes(Resource):
         # return {"code": 1, "status": "OK"}, 200
 
 class BoargameSingleRes(Resource):
+    def get(self,boardgame_id):
+        all_games = Boardgame.objects
+        found_game = all_games.with_id(boardgame_id)
+        return mlab.item2json(found_game)
     def delete(self,boardgame_id):
         all_game = Boardgame.objects
         found_game = all_game.with_id(boardgame_id)
