@@ -20,29 +20,18 @@ def hello_world():
 
 # class BoardgameList(Resource)
 class Boardgame(Document):
-    # "name": "Coup",
     name = StringField()
-    # "image": "//cf.geekdo-images.com/images/pic1229634.jpg",
     image = StringField()
-    # "thumbnail": "//cf.geekdo-images.com/images/pic1229634_t.jpg",
     thumbnail = StringField()
-    # "description":,
     description = StringField()
-    # "rule":,
-    rule = StringField()
-    # "minPlayers": 2,
-    minPlayers = IntField()
-    # "maxPlayers": 4,
-    maxPlayers = IntField()
-    # "idealPlayers": 4,
-    idealPlayers = IntField()
-    # "playingTime": 25,
-    playingTime = IntField()
-    # "isFavorite": false,
+    age = IntField()
     isFavorite = BooleanField()
-    # "categories" = ["popular", "family", "kids", "tatical"],
+    rule = StringField()
+    minPlayers = IntField()
+    maxPlayers = IntField()
+    idealPlayers = IntField()
+    playingTime = IntField()
     categories = ListField(StringField())
-    # "mechanisms" = ["hand_management", "player_elimination", "press_your_luck_set", "collection", "take_that"]
     mechanisms = ListField(StringField())
 
 
@@ -58,6 +47,7 @@ parser = reqparse.RequestParser()
 parser.add_argument("name", type=str, location="json")
 parser.add_argument("image", type=str, location="json")
 parser.add_argument("thumbnail", type=str, location="json")
+parser.add_argument("age",type=int, location ="json")
 parser.add_argument("description", type=str, location="json")
 parser.add_argument("rule", type=str, location="json")
 parser.add_argument("minPlayers", type=int, location="json")
@@ -77,6 +67,7 @@ class BoardgameRes(Resource):
         image = args["image"]
         thumbnail = args["thumbnail"]
         description = args["description"]
+        age = args["age"]
         minPlayers = args["minPlayers"]
         maxPlayers = args["maxPlayers"]
         idealPlayers = args["idealPlayers"]
@@ -89,6 +80,7 @@ class BoardgameRes(Resource):
         new_boardgame.name=name
         new_boardgame.image=image
         new_boardgame.thumbnail=thumbnail
+        new_boardgame.age = age
         new_boardgame.description=description
         new_boardgame.minPlayers=minPlayers
         new_boardgame.maxPlayers=maxPlayers
@@ -106,6 +98,7 @@ class BoargameSingleRes(Resource):
         all_games = Boardgame.objects
         found_game = all_games.with_id(boardgame_id)
         return mlab.item2json(found_game)
+
     def delete(self,boardgame_id):
         all_game = Boardgame.objects
         found_game = all_game.with_id(boardgame_id)
@@ -116,6 +109,7 @@ class BoargameSingleRes(Resource):
         name = args["name"]
         image = args["image"]
         thumbnail = args["thumbnail"]
+        age = args["age"]
         description = args["description"]
         minPlayers = args["minPlayers"]
         maxPlayers = args["maxPlayers"]
@@ -133,6 +127,7 @@ class BoargameSingleRes(Resource):
         found_game.name = name
         found_game.image = image
         found_game.thumbnail = thumbnail
+        found_game.age = age
         found_game.description = description
         found_game.minPlayers = minPlayers
         found_game.maxPlayers = maxPlayers
